@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,10 +18,12 @@ export class CustomerService {
     location: new FormControl('')
   });
 
-  getCustomer() {
-    this.customerList = this.firebase.list('customer');
+
+  getCustomers() {
+    this.customerList = this.firebase.list('customers');
     return this.customerList.snapshotChanges();
   }
+
 
   insertCustomer(customer) {
     this.customerList.push({
@@ -29,6 +32,24 @@ export class CustomerService {
       mobile: customer.mobile,
       location: customer.location
     });
+  }
+
+  populateForm(customer) {
+    this.form.setValue(customer);
+  }
+
+  updateCustomer(customer) {
+    this.customerList.update(customer.$key,
+      {
+        fullName: customer.fullName,
+        email: customer.email,
+        mobile: customer.mobile,
+        location: customer.location
+      });
+  }
+
+  deleteCustomer($key: string) {
+    this.customerList.remove($key);
   }
 
 }

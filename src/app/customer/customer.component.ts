@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
 import { CustomerService } from '../shared/customer.service';
-import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-customer',
@@ -23,10 +23,10 @@ export class CustomerComponent implements OnInit {
       if (this.customerService.form.get('$key').value == null)
         this.customerService.insertCustomer(this.customerService.form.value);
       else
-        //this.customerService.updateCustomer(this.customerService.form.value);
-        // this.showSuccessMessage = true;
-        // setTimeout(() => this.showSuccessMessage = false, 3000);
-        this.submitted = false;
+        this.customerService.updateCustomer(this.customerService.form.value);
+      this.showSuccessMessage = true;
+      setTimeout(() => this.showSuccessMessage = false, 3000);
+      this.submitted = false;
       this.customerService.form.reset();
       //this is to be done for proper reset operation
       this.customerService.form.setValue({
